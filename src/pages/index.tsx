@@ -1,12 +1,26 @@
-import { useEffect } from "react"
-import { useRouter } from "next/router"
+import { getSession } from "next-auth/react"
+import type { GetServerSideProps } from "next"
 
 export default function Home() {
-  const router = useRouter()
+  return null // Page will redirect immediately
+}
 
-  useEffect(() => {
-    router.push("/auth/signin")
-  }, [router])
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
 
-  return null
+  if (session) {
+    return {
+      redirect: {
+        destination: "/hello",
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    redirect: {
+      destination: "/auth/signin",
+      permanent: false,
+    },
+  }
 }
