@@ -1,10 +1,14 @@
 import { getSession } from "next-auth/react"
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import type { GetServerSidePropsContext } from "next"
 import Navbar from "../components/Navbar"
 
-export default function HelloPage({
-  user,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+type User = {
+  name?: string | null
+  email?: string | null
+  image?: string | null
+}
+
+export default function HelloPage({ user }: { user: User }) {
   return (
     <>
       <Navbar />
@@ -16,7 +20,7 @@ export default function HelloPage({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context)
 
   if (!session) {
@@ -29,6 +33,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: { user: session.user },
+    props: {
+      user: session.user,
+    },
   }
 }
