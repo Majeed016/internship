@@ -12,4 +12,15 @@ export default NextAuth({
   pages: {
     signIn: "/auth/signin",
   },
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
 })
