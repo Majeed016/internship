@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react"
-import type { GetServerSideProps, GetServerSidePropsContext } from "next"
+import type { GetServerSidePropsContext } from "next"
 import Navbar from "../components/Navbar"
 
 interface User {
@@ -24,12 +24,10 @@ export default function HelloPage({ user }: HelloPageProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<HelloPageProps> = async (
-  context: GetServerSidePropsContext
-) => {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context)
 
-  if (!session || !session.user) {
+  if (!session) {
     return {
       redirect: {
         destination: "/auth/signin",
@@ -41,9 +39,9 @@ export const getServerSideProps: GetServerSideProps<HelloPageProps> = async (
   return {
     props: {
       user: {
-        name: session.user.name || null,
-        email: session.user.email || null,
-        image: session.user.image || null,
+        name: session.user?.name || null,
+        email: session.user?.email || null,
+        image: session.user?.image || null,
       },
     },
   }
