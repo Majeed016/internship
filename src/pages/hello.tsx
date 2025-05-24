@@ -1,8 +1,10 @@
 import { getSession } from "next-auth/react"
-import type { GetServerSideProps } from "next"
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Navbar from "../components/Navbar"
 
-export default function HelloPage({ user }: { user: any }) {
+export default function HelloPage({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Navbar />
