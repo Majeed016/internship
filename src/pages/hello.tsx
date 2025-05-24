@@ -8,6 +8,9 @@ export default function HelloPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
 
+   console.log("Session:", session)
+   console.log("Status:", status)
+
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/auth/signin")
