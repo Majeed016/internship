@@ -40,7 +40,7 @@ const statusStyles: Record<string, string> = {
 }
 
 export default function OrdersPage() {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const router = useRouter()
 
   useEffect(() => {
